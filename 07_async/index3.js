@@ -58,21 +58,35 @@ async function printItems() {
 printItems();
 
 // --------------------------------------------------------------------------------------------
+// Index2.js 에서 작성한 코드를 async/await 이용해서 변경하기
+
+async function exc() {
+    goMart(); // 1번 실행
+    await pickDrink(); // 2번 실행 -> 기다려줘야 함
+    pay(); // 2번이 완료되어야 3번 실행
+
+    // 장점 : 코드 실행 순서가 명확히 보인다.
+}
+
+let product;
+let price;
+let 
 
 function goMart() {
-  console.log("마트에 가서 어떤 음료 살지 고민!");
-}
-
-function pickDrink() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      console.log("고민 끝~!");
-      product = "제로 사이다";
-      price = 4000; // 2000 -> 상품명, 가격 출력 그대로 / 4000 -> 금액 부족 메세지 출력
-
-      if (price <= 2000) {
+    console.log('마트에 가서 어떤 음료 살지 고민!');
+  }
+  
+  function pickDrink() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log('고민 끝~!');
+        product = '제로 콜라';
+        price = 4000;
         resolve();
-      }
-    }, 3000);
-  });
-}
+      }, 3000);
+    });
+  }
+  
+  function pay() {
+    console.log(`상품명: ${product}, 가격: ${price}`);
+  }
