@@ -8,7 +8,6 @@ exports.main = (req, res) => {
 // (2) GET /visitor => localhost:PORT/visitor
 exports.getVisitors = (req, res) => {
   // [Before]
-
   // console.log(Visitor.getVisitors());
   // res.render("visitor", { data: Visitor.getVisitors() });
 
@@ -26,5 +25,15 @@ exports.postVisitor = (req, res) => {
   Visitor.postVisitor(req.body, (result) => {
     console.log("Cvisitor.js >>", result); // model 코드에서 데이터를 추가한 결과인 rows.insertId
     res.send({ id: result, name: req.body.name, comment: req.body.comment }); // 클라이언트가 사용할 정보
+  });
+};
+
+// (5) DELETE /visitor/delete
+exports.deleteVisitor = (req, res) => {
+  console.log(req.body); // { id: n }
+
+  Visitor.deleteVisitor(req.body.id, (result) => {
+    console.log("Cvisitor.js >> ", result);
+    res.send("삭제 성공!!");
   });
 };
