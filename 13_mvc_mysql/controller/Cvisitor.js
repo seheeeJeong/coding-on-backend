@@ -7,13 +7,14 @@ exports.main = (req, res) => {
 
 // (2) GET /visitor => localhost:PORT/visitor
 exports.getVisitors = (req, res) => {
-  // [Before]
+  // [before]
   // console.log(Visitor.getVisitors());
-  // res.render("visitor", { data: Visitor.getVisitors() });
+  // res.render('visitor', { data: Visitor.getVisitors() });
 
-  // [After] mySQL db 연결!
+  // [after] mysql db 연결!
   Visitor.getVisitors((result) => {
     console.log("Cvisitor.js >>", result);
+    // => [ {}, {}, {} ]
     res.render("visitor", { data: result });
   });
 };
@@ -24,7 +25,7 @@ exports.postVisitor = (req, res) => {
 
   Visitor.postVisitor(req.body, (result) => {
     console.log("Cvisitor.js >>", result); // model 코드에서 데이터를 추가한 결과인 rows.insertId
-    res.send({ id: result, name: req.body.name, comment: req.body.comment }); // 클라이언트가 사용할 정보
+    res.send({ id: result, name: req.body.name, comment: req.body.comment });
   });
 };
 
@@ -35,5 +36,22 @@ exports.deleteVisitor = (req, res) => {
   Visitor.deleteVisitor(req.body.id, (result) => {
     console.log("Cvisitor.js >> ", result);
     res.send("삭제 성공!!");
+  });
+};
+
+exports.getVisitor = (req, res) => {
+  console.log("*", req.query); // { id: n }
+
+  Visitor.getVisitor(req.query.id, (result) => {
+    console.log("**", result); // model callback에서 넘겨주는 rows[0] => {}
+    res.send(result);
+  });
+};
+
+exports.patchVisitor = (req, res) => {
+  console.log(req.body);
+
+  Visitor.patchVisitor(req.body, () => {
+    res.send("수정 성공!");
   });
 };
